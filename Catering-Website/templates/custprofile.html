@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/temp.css')}}">
+		<title>{% block title %}Cathy Cater!{% endblock %}</title>
+		<style type="text/css">
+			body{
+				background-image: url({{ url_for('static', filename = 'img/cat.jpg')}})
+			}
+		</style>
+		</head>
+	<body>
+		{% if username %}
+			Welcome to your profile, {{ username }}!	|			<a href="{{ url_for("unlogger") }}">LOG OUT</a>
+			<br>
+			Here in Cathy Cater, we provide several different food types:
+			<ul>
+				<li>Asian Food
+				<li>European Food
+				<li>American Food
+			</ul>
+
+			{% if events %}
+				Here's the list of upcoming events: <br>
+			{% for ev in events %}
+				<strong>Event Name:</strong> {{ ev.name }} <a href="{{ url_for("cancel", username = username, eventname = ev.name) }}">CANCEL EVENT</a> <br>
+				<strong>Contact:</strong> {{ ev.contact }} <br>
+				<strong>Date:</strong> {{ ev.date }} <br>
+				<strong>Location:</strong> {{ ev.location }} <br>
+			{% endfor %}
+			{% endif %}
+			<br>
+			<br>
+			Fill in the form to request a new event:
+
+			<form action="" method="POST">
+				Event Name:  <input type="text" name="name" />
+				<br />
+				Contact E-mail: <input type="text" name="contact" />
+				<br / >
+				Event Date: <input type="text" name="date" />
+				<br />
+				Event Location: <input type="text" name="location" />
+				<br />
+				Number of People:  <input type="text" name="numpeople" />
+				<br />
+				Food Type: <input type="text" name="date" />
+				<br />
+				<input type="submit" value="Submit" />
+			</form>
+
+			<br />
+			<br />
+		{% endif %}
+		{% block body %}
+		{% endblock %}
+	</body>
+</html>

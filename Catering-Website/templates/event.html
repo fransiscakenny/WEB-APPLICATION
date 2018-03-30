@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/temp.css')}}">
+		<title>{% block title %}Cathy Cater!{% endblock %}</title>
+		<style type="text/css">
+			body{
+				background-image: url({{ url_for('static', filename = 'img/cat.jpg')}})
+			}
+		</style>	</head>
+	<body>
+			Congrats, you have created a new event! <br>
+      Below is listed the information on your event: <br>
+				Event Name: {{ event.name }} <br>
+				Contact E-mail: {{ event.contact }} <br>
+				Event Date: {{ event.date }} <br>
+				Event Location: {{ event.location }} <br>
+		<br>
+		<a href="{{ url_for("custprofile", username = event.user, events = events) }}">Go back to your profile..</a>
+	</body>
+</html>

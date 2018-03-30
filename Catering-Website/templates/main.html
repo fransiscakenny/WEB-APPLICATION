@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/temp.css')}}">
+		<title>{% block title %}Cathy Cater!{% endblock %}</title>
+		<style type="text/css">
+			body{
+				background-image: url({{ url_for('static', filename = 'img/cat.jpg')}})
+			}
+		</style>
+	</head>
+	<body>
+		{% if username %}
+			<p>Logged in as {{ username }}, <a href="{{ url_for("unlogger") }}">click here to logout</a></p>
+			<br />
+			<br />
+    {% else %}
+      Hey everyone! Select one that applies:
+      <br />
+			<a href="{{ url_for("ownerlog") }}">Log in as OWNER</a>
+      <br />
+      <a href="{{ url_for("custsign") }}">Register as CUSTOMER</a>
+      <br />
+      <a href="{{ url_for("custlog") }}">Log in as CUSTOMER</a>
+      <br />
+			<a href="{{ url_for("stafflogger") }}">Log in as STAFF</a>
+      <br />
+		{% endif %}
+		{% block body %}
+		{% endblock %}
+	</body>
+</html>

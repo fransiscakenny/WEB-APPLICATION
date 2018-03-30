@@ -1,0 +1,16 @@
+{% extends "main.html" %}
+
+{% block title %}Sign Up! - {{ super() }}{% endblock %}
+
+{% block body %}
+  <p>Customer can register here:</p>
+		<form action="" method="POST">
+			Username:  <input type="text" name="username" />
+			<br />
+      E-mail: <input type="text" name="email" />
+      <br />
+			Password:  <input type="text" name="password" />
+			<br />
+			<input type="submit" value="Submit" />
+		</form>
+{% endblock %}

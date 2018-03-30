@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/temp.css')}}">
+		<title>{% block title %}Cathy Cater!{% endblock %}</title>
+		<style type="text/css">
+			body{
+				background-image: url({{ url_for('static', filename = 'img/cat.jpg')}})
+			}
+		</style>
+		</head>
+	<body>
+		{% if username %}
+			Welcome to your profile, Staff: {{ username }}!	|			<a href="{{ url_for("unlogger") }}">LOG OUT</a>
+			<br>
+
+			{% if sevents %}
+				Here's the list of your upcoming shifts: <br>
+			{% for ev in sevents %}
+      {% if ev.name != "" %}
+				<strong>Event Name:</strong> {{ ev.name }} <br>
+				<strong>Contact:</strong> {{ ev.contact }} <br>
+				<strong>Date:</strong> {{ ev.date }} <br>
+				<strong>Location:</strong> {{ ev.location }} <br>
+        <strong>Staff:</strong> {{ ev.staff }} <br>
+      {% endif %}
+			{% endfor %}
+      {% else %}
+      <strong>You do not have shifts for any events. </strong> <br>
+			{% endif %}
+
+      {% if events %}
+        Here's the list of available shifts: <br>
+      {% for e in events %}
+      {% if e.name != "" %}
+        <strong>Event Name:</strong> {{ e.name }} <a href="{{ url_for("signup", staffs = username, events = e.name) }}">SIGN UP</a><br>
+        <strong>Contact:</strong> {{ e.contact }} <br>
+        <strong>Date:</strong> {{ e.date }} <br>
+        <strong>Location:</strong> {{ e.location }} <br>
+        <strong>Staff:</strong> {{ e.staff }} <br>
+      {% endif %}
+      {% endfor %}
+      {% else %}
+      <strong>No shifts available. </strong> <br>
+      {% endif %}
+
+			<br>
+  			<a href="{{ url_for("eventsignup", staffname = username) }}">SIGN UP FOR OTHER EVENTS</a>
+      <br />
+			<br />
+		{% endif %}
+		{% block body %}
+		{% endblock %}
+	</body>
+</html>

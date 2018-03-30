@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/temp.css')}}">
+		<title>{% block title %}Cathy Cater!{% endblock %}</title>
+		<style type="text/css">
+			body{
+				background-image: url({{ url_for('static', filename = 'img/cat.jpg')}})
+			}
+		</style>
+	</head>
+	<body>
+			Welcome to the owner's profile!	|			<a href="{{ url_for("unlogger") }}">LOG OUT</a>
+			<br>
+			<a href="{{ url_for("makestaff") }}">Create Staff Account</a>
+			<br>
+			{% if events %}
+				Here's the list of upcoming events: <br>
+			{% for ev in events %}
+				<strong>Event Name:</strong> {{ ev.name }} <a href="{{ url_for("assign", event = ev.name )}}">ASSIGN/CHANGE STAFF</a><br>
+				<strong>Contact:</strong> {{ ev.contact }} <br>
+				<strong>Date:</strong> {{ ev.date }} <br>
+				<strong>Location:</strong> {{ ev.location }} <br>
+				<strong>Staff:</strong> {{ ev.staff }} <br>
+			{% endfor %}
+			{% else %}
+				<strong>There are no upcoming events. </strong> <br>
+			{% endif %}
+			{% if staffs %}
+				Here's the list of Staff: <br>
+				{% for st in staffs %}
+				<strong>Staff Name:</strong> {{ st.username }} <br>
+				<strong>Staff E-mail:</strong> {{ st.email }} <br>
+				<strong>Staff Password:</strong> {{ st.pw_hash }} <br>
+				<strong>Staff Event:</strong> {{ st.event }} <br>
+				{% endfor %}
+			{% endif %}
+			<br>
+
+			<br />
+		{% block body %}
+		{% endblock %}
+	</body>
+</html>

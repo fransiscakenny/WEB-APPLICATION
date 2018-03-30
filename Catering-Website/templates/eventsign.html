@@ -1,0 +1,17 @@
+{% extends "staffprof.html" %}
+{% block body %}
+{% if staffname %}
+{{staffname}} can sign up on these shifts: <br>
+{% endif %}
+{% if events %}
+  {% for ev in events %}
+  <strong>Event Name:</strong> {{ ev.name }} <a href="{{ url_for("signup", staffs = staffname, events = ev.name) }}">SIGN UP</a><br>
+  <strong>Contact:</strong> {{ ev.contact }} <br>
+  <strong>Date:</strong> {{ ev.date }} <br>
+  <strong>Location:</strong> {{ ev.location }} <br>
+  <strong>Staff:</strong> {{ ev.staff }} <br>
+  {% endfor %}
+{% else %}
+empty
+{% endif %}
+{% endblock %}
