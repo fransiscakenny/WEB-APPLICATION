@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Chatty Kathy! </title>
+</head>
+<body>
+  <header>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/temp.css')}}">
+    <style type="text/css">
+      body{
+        background-image: url({{ url_for('static', filename = 'img/chats.jpg')}})
+      }
+    </style>
+    <h1>Welcome to Chatty Kathy!</h1>
+    <p><a href = "{{url_for('signingup')}}">Sign Up</a> <a href = "{{url_for('signingin')}}">Sign In</a></p>
+    <p>Enter your username and password here:</p>
+  		<form action="" method="POST">
+  			Username:  <input type="text" name="username" />
+  			<br />
+  			Password:  <input type="text" name="password" />
+  			<br />
+  			<input type="submit" value="Submit" />
+  		</form>
+    <button id="btn">Submit Chat!</button>
+    <div id="animal"></div>
+  </header>
+  <script type = "text/javascript" src = "{{url_for('static', filename='c.js')}}"></script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Chatty Kathy! </title>
+</head>
+<body>
+  <header>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/temp.css')}}">
+    <style type="text/css">
+      body{
+        background-image: url({{ url_for('static', filename = 'img/chats.jpg')}})
+      }
+    </style>
+    {% if username and name%}
+    <h1>{{username}} is in {{name}} chatroom.. </h1>
+    <a href="{{ url_for("logout") }}">LOG OUT</a>
+    <a href="{{ url_for("profile", username=username) }}">LEAVE CHATROOM</a>
+
+    {% endif %}
+    {% if name %}
+    {% endif %}
+    <div id="animal"></div>
+
+
+    <p>Enter your message here:</p>
+      <div id="mess">
+      <form action="" method="POST">
+        Message:  <input type="text" name="message" />
+        <br />
+        <input type="submit" value="Send" />
+      </form>
+      </div>
+    <button id="btn">See Chats!</button>
+
+  </header>
+
+  <script type = "text/javascript">
+  var timeoutID;
+  var timeout = 45000;
+  var pageCounter = 1;
+  var animalContainer = document.getElementById("animal");
+  var btn = document.getElementById("btn");
+  //var chatroom = document.getElementById("crname").value;
+  function setup() {
+
+  	timeoutID = window.setTimeout(poller, timeout);
+  }
+
+  btn.addEventListener("click", function(){
+    var ourRequest = new XMLHttpRequest();
+    ourRequest.open('GET', 'http://127.0.0.1:5000/todos')
+    //ourRequest.open('GET', 'http://localhost:5000/todos')
+    //ourRequest.open('GET', 'https://learnwebcode.github.io/json-example/animals-1.json'); //SEND / POST OR RECEIVE DATA / GET
+    ourRequest.onload = function() { //What happens when data is loaded
+      var ourData = JSON.parse(ourRequest.responseText)
+      //console.log(ourData[0])
+      //alert(chatrooms);
+      //alert("{{name}}");
+       renderHTML(ourData);
+    };
+    ourRequest.send();
+  });
+
+  function renderHTML(data){
+    var htmlString = "";
+    /*for (i = 0; i < data.length; i++){
+      htmlString += "<p>"+data[i].name+" is a "+data[i].species +".</p>";
+    }*/
+    //htmlString += "<p>"+data['todo1']['task']+"</p>";
+    //htmlString += "<p>";
+    for(i = 0; i < data["{{name}}"].length; i++)
+    {
+        htmlString+= "<p>"+data["{{name}}"][i]+"</p>";
+    }
+    //htmlString += "</p>";
+    //htmlString += "<p>"+"{{name}}"+"sprinkles"+data["{{name}}"]+"</p>";
+    animalContainer.insertAdjacentHTML('beforeend', htmlString);
+  }
+
+  function poller(){
+
+    var httpRequest = new XMLHttpRequest();
+    if(!httpRequest){
+      alert('Giving up :( Cannot create an XMLHTTP instance');
+  		return false;
+    }
+    httpRequest.onreadystatechange = function() { handlePoll(httpRequest) };
+    httpRequest.open("GET", "http://127.0.0.1:5000/todos");
+    httpRequest.send();
+  }
+
+  function handlePoll(httpRequest) {
+	if (httpRequest.readyState === XMLHttpRequest.DONE) {
+		if (httpRequest.status === 200) {
+			var tab = document.getElementById("animal");
+			//while (tab.rows.length > 0) {
+			//	tab.deleteRow(0);
+			//}
+
+			var rows = JSON.parse(httpRequest.responseText);
+      renderHTML(rows);
+			//for (var i = 0; i < rows.length; i++) {
+			//	addRow(rows[i]);
+			//}
+
+			timeoutID = window.setTimeout(poller, timeout);
+
+		} else {
+			alert("There was a problem with the poll request.  you'll need to refresh the page to recieve updates again!");
+		}
+	}
+}
+
+  </script>
+</body>
+</html>

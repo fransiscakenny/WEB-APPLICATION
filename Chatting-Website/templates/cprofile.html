@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Chatty Kathy! </title>
+</head>
+<body>
+  <header>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/temp.css')}}">
+    <style type="text/css">
+			body{
+				background-image: url({{ url_for('static', filename = 'img/chats.jpg')}})
+			}
+		</style>
+    {% if username %}
+    <h1>Welcome to your profile, {{username}}!</h1>
+    <a href="{{ url_for("logout") }}">LOG OUT</a>
+    {% endif %}
+    {% if chatroom %}
+      <p>Available ChatRooms: <br></p>
+      {% for c in chatroom %}
+        {{c}} <a href = '{{url_for('chatroom', name = c.name, username = username)}}'>ENTER<a><br>
+      {% endfor %}
+    {% else %}
+      <p>There is no ChatRooms available.<p>
+    {% endif %}
+    <p><a href = "{{url_for('createcr', username = username)}}">Create a ChatRoom</a></p>
+    <button id="btn">Submit Chat!</button>
+    <div id="animal"></div>
+  </header>
+  <script type = "text/javascript" src = "{{url_for('static', filename='c.js')}}"></script>
+</body>
+</html>
